@@ -47,21 +47,35 @@ public class Magpie
         {
             response = "Tell me more about your pets.";
         } 
-        else if (statement.indexOf("Mrs.") >= 0
-                || statement.indexOf("Mrs") >= 0
+        else if (statement.indexOf("Rebecca Lee") >= 0
                 || statement.indexOf("teacher") >= 0)
         {
             response = "She sounds like a good teacher.";
         }
-        else if (statement.indexOf("Mr.") >= 0
-                || statement.indexOf("Mr") >= 0
+        else if (statement.indexOf("Nathan Lin") >= 0
                 || statement.indexOf("teacher") >= 0)
         {
             response = "He sounds like a good teacher.";
         }
-        else if (statement.trim() == "")
+        else if ((statement.trim()).length() == 0)
         {
             response = "Say something, please.";
+        }
+        else if (statement.indexOf("Alexa") >= 0
+                || statement.indexOf("Amazon") >= 0
+                || statement.indexOf("Echo") >= 0)
+        {
+            response = "I am better.";
+        }
+        else if (statement.indexOf("dance") >= 0
+                || statement.indexOf("tap") >= 0)
+        {
+            response = "Tap dancing is the best kind.";
+        }
+        else if (statement.indexOf("music") >= 0
+                || statement.indexOf("pop") >= 0)
+        {
+            response = "What's your favorite genre of music?";
         }
         else
         {
@@ -97,6 +111,14 @@ public class Magpie
         {
             response = "You don't say.";
         }
+        else if (whichResponse == 4)
+        {
+            response = "Wow, cool!";
+        }
+        else if (whichResponse == 5)
+        {
+            response = "For sure!";
+        }
     
         return response;
     }
@@ -111,6 +133,14 @@ public class Magpie
     // The method returns the index of the first character in word
     // if it is found, and returns -1 otherwise. 
     public int findWord(String str, String word) {
+        for (int i = 0; i < str.length(); i++) {
+            if (str.indexOf(word, i) >= 0) {
+                char check = str.charAt(str.indexOf(word, i) + word.length());
+                if (!(check >= 65 && check <= 90) && !(check >= 97 && check <= 122)) {
+                    return str.indexOf(word, i);
+                }
+            }
+        }
         return -1;
     }
 
