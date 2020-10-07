@@ -31,29 +31,29 @@ public class Magpie
     public String getResponse(String statement)
     {
         String response = "";
-        if (statement.indexOf("no") >= 0)
+        if (findWord(statement, "no") >= 0)
         {
             response = "Why so negative?";
         }
-        else if (statement.indexOf("mother") >= 0
-                || statement.indexOf("father") >= 0
-                || statement.indexOf("sister") >= 0
-                || statement.indexOf("brother") >= 0)
+        else if (findWord(statement, "mother") >= 0
+                || findWord(statement, "father") >= 0
+                || findWord(statement, "sister") >= 0
+                || findWord(statement, "brother") >= 0)
         {
             response = "Tell me more about your family.";
         }
-        else if (statement.indexOf("dog") >= 0
-                || statement.indexOf("cat") >= 0)
+        else if (findWord(statement, "dog") >= 0
+                || findWord(statement, "cat") >= 0)
         {
             response = "Tell me more about your pets.";
         } 
-        else if (statement.indexOf("Rebecca Lee") >= 0
-                || statement.indexOf("teacher") >= 0)
+        else if (findWord(statement, "Rebecca Lee") >= 0
+                || findWord(statement, "teacher") >= 0)
         {
             response = "She sounds like a good teacher.";
         }
-        else if (statement.indexOf("Nathan Lin") >= 0
-                || statement.indexOf("teacher") >= 0)
+        else if (findWord(statement, "Nathan Lin") >= 0
+                || findWord(statement, "teacher") >= 0)
         {
             response = "He sounds like a good teacher.";
         }
@@ -61,21 +61,39 @@ public class Magpie
         {
             response = "Say something, please.";
         }
-        else if (statement.indexOf("Alexa") >= 0
-                || statement.indexOf("Amazon") >= 0
-                || statement.indexOf("Echo") >= 0)
+        else if (findWord(statement, "Alexa") >= 0
+                || findWord(statement, "Amazon") >= 0
+                || findWord(statement, "Echo") >= 0)
         {
             response = "I am better.";
         }
-        else if (statement.indexOf("dance") >= 0
-                || statement.indexOf("tap") >= 0)
+        else if (findWord(statement, "dance") >= 0
+                || findWord(statement, "tap") >= 0)
         {
             response = "Tap dancing is the best kind.";
         }
-        else if (statement.indexOf("music") >= 0
-                || statement.indexOf("pop") >= 0)
+        else if (findWord(statement, "music") >= 0
+                || findWord(statement, "pop") >= 0)
         {
             response = "What's your favorite genre of music?";
+        }
+        else if (statement.indexOf("I want to ") >= 0) 
+        {
+            return transformIWantToStatement(statement);
+        }
+        else if (statement.indexOf("I want ") >= 0) 
+        {
+            return transformIWantStatement(statement);
+        }
+        else if ((statement.indexOf("I ") >= 0)
+                && (statement.indexOf(" you") >= 0)) 
+        {
+            return transformIYouStatement(statement);
+        }
+        else if ((statement.indexOf("You ") >=0)
+         && (statement.indexOf(" me") >= 0))
+        {
+            return transformYouMeStatement(statement);
         }
         else
         {
@@ -133,22 +151,10 @@ public class Magpie
     // The method returns the index of the first character in word
     // if it is found, and returns -1 otherwise. 
     public int findWord(String str, String word) {
-        for (int i = 0; i < str.length(); i++) {
-            if (str.indexOf(word, i) >= 0) {
-                char check = str.charAt(str.indexOf(word, i) + word.length());
-                if (str.indexOf(word, i) >= 1) {
-                    char before = str.charAt(str.indexOf(word, i) - word.length());
-                    if ((!(check >= 65 && check <= 90) && !(check >= 97 && check <= 122))
-                        && (!(before >= 65 && before <= 90) && !(before >= 97 && before <= 122))) {
-                        return str.indexOf(word, i);
-                    }
-                }
-                else if (!(check >= 65 && check <= 90) && !(check >= 97 && check <= 122)) {
-                    return str.indexOf(word, i);
-                }
-            }
-        }
-        return -1;
+        str = " " + str.toLowerCase() + " ";
+        word = " " + word.toLowerCase() + " ";
+
+        return str.indexOf(word);
     }
 
     
@@ -162,8 +168,7 @@ public class Magpie
      */
     public String transformIWantStatement(String statement)
     {
-        //your code here
-        return "";
+        return "Would you really be happy if you had " + statement.substring(7) + "?";
     }
 
     /**
@@ -174,8 +179,7 @@ public class Magpie
      */
     public String transformIYouStatement(String statement)
     {
-        //your code here
-        return "";
+        return "Why do you " + statement.substring(2, statement.length() - 4) + " me?";
     }
 
     /**
@@ -186,12 +190,8 @@ public class Magpie
      */
     public String transformIWantToStatement(String statement)
     {
-        // your code here
-        return "";
+        return "What would it mean to " + statement.substring(10) + "?";
     }
-
-
-
 
     /**
      * Take a statement with "you <something> me" and transform it into 
@@ -201,7 +201,6 @@ public class Magpie
      */
     public String transformYouMeStatement(String statement)
     {
-        // your code here
-        return "";
+        return "What makes you think that I " + statement.substring(statement.indexOf("you ") + 4, statement.length()-3) + " you?";
     }
 }
