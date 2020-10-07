@@ -136,7 +136,14 @@ public class Magpie
         for (int i = 0; i < str.length(); i++) {
             if (str.indexOf(word, i) >= 0) {
                 char check = str.charAt(str.indexOf(word, i) + word.length());
-                if (!(check >= 65 && check <= 90) && !(check >= 97 && check <= 122)) {
+                if (str.indexOf(word, i) >= 1) {
+                    char before = str.charAt(str.indexOf(word, i) - word.length());
+                    if ((!(check >= 65 && check <= 90) && !(check >= 97 && check <= 122))
+                        && (!(before >= 65 && before <= 90) && !(before >= 97 && before <= 122))) {
+                        return str.indexOf(word, i);
+                    }
+                }
+                else if (!(check >= 65 && check <= 90) && !(check >= 97 && check <= 122)) {
                     return str.indexOf(word, i);
                 }
             }
